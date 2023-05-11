@@ -123,7 +123,6 @@ class QuantumLeague:
 
     def show_text(self, text, color):
         self.renderer.begin_rendering()
-        # self.renderer.draw_rect_2d(100, 100, 150, 50, True, self.renderer.create_color(100, 0, 0, 0))
         scale = 5
         for dx in [-3, 0, 3]:
             for dy in [-3, 0, 3]:
@@ -198,9 +197,9 @@ class QuantumLeague:
         self.current_replay.add_snapshot(t, (snapshot.cars[self.human_index], self.controls_tracker.target_controls))
         self.new_ball_replay.add_snapshot(t, snapshot.ball)
 
-        # hide bots
+        # hide unused bots
         for index in self.blue_bots_indices + self.orange_bots_indices:
-            target_game_state.cars[index] = CarState(Physics(Vector3(4000 - (index // 5) * 150, 4600 + (index % 5) * 150, 20)))
+            target_game_state.cars[index] = CarState(Physics(Vector3(100_000 - (index // 5) * 150, 100_000 + (index % 5) * 150, 5_000)))
 
         # playback cars
         for index, replay in itertools.chain(
@@ -209,7 +208,7 @@ class QuantumLeague:
         ):
             if replay.finished:
                 continue
-            
+
             del target_game_state.cars[index]
 
             state = replay.playback(t)
